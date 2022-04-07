@@ -160,3 +160,10 @@ var app = http.createServer(function (request, response) {
 });
 
 app.listen(3000);
+// Starts the HTTP server listening for connections : HTTP 서버 연결을 구동
+
+/* 지금껏 사용한
+ app = http.createServer()
+ app.listen
+ 등등은 모두 서버대응용 API 이다.
+*/
