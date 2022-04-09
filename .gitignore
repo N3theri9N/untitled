@@ -1,0 +1,6 @@
+dev.js
+node_modules/
+reactjstutorials/config/
+
+.idea/
+.idea/sonarlint/issuestore/

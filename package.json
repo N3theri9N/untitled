@@ -2,7 +2,7 @@
   "name": "untitled",
   "version": "1.0.0",
   "description": "",
-  "main": "./opentutorials/index.js",
+  "main": "./nodejstutorials/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --build",
