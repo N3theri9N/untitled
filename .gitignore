@@ -1,6 +1,7 @@
 node_modules/
 src/reactjstutorials/node_modules/
-src/reactjstutorials/config/
+src/reactjstutorials/server/config/
 
-.idea/
-.idea/sonarlint/issuestore/
+.idea/*
+.idea/sonarlint/issuestore/*
+.idea/sonarlint/issuestore/index.pb
