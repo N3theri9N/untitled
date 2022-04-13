@@ -24,6 +24,10 @@ mongoose.connect(config.mongoURI
 
 app.get('/', (req, res) => res.send("Hello World!~~안녕하세요 ~ 새해 복 많이 받아 ")); // root 에서 helloWorld 리스폰 셋팅
 
+app.get('/api/hello', (req, res) => {
+    res.send("안녕하세요");
+});
+
 app.post('/api/users/register' ,(req, res) => {
     // 회원가입 할때 필요한 내용들 저장
     // clicnt 에서 가져오면 데이터베이스에 넣어줌.
