@@ -7,7 +7,6 @@ const { auth } = require("./middleware/auth");
 const config = require("./config/key");
 
 const app = express();
-const port = 5000;
 
 // 클라이언트 내용을 서버에서 분석해서 가져올 수 있도록 app 설정
 // application/x-www-form-urlencoded 형식을 분석함
@@ -104,6 +103,8 @@ app.get('/api/users/logout', auth, (req, res) => {
 
 });
 
+
+const port = 5000;
 app.listen(port, () => console.log(`Example app listening on port ${port}`));
 
 // Bodyparser : client 에서 받은 내용을 파싱하는 것
