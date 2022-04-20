@@ -106,7 +106,7 @@ if(!firstName){
 */
 
 // SWITCH-CASE-DEFAULT
-const day = prompt("INPUT TODAY");
+/*const day = prompt("INPUT TODAY");
 switch(day){
     case 1 :
         console.log("MONDAY");
@@ -130,4 +130,4 @@ switch(day){
     default :
         console.log("I DON'T KNOW WHAT");
         break;
-}
+}*/
