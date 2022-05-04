@@ -2,31 +2,59 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Score Keeper</title>
-    <style>
-        .winner {
-            color: green;
-        }
-        .loser {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 <body>
-    <h1><span class="player1Score">0</span> to <span class="player2Score">0</span></h1>
-    <select name="" id="winningScore">
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-    </select>
-    <button id="player1Button">+1 player One</button>
-    <button id="player2Button">+1 player Two</button>
-    <button id="resetButton">reset</button>
+<div class="container ">
+    <section class="section">
+        <div class="columns">
+        <div class="column is-half is-offset-one-quarter">
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image is-2by1">
+                        <img src="" alt="">
+                    </figure>
+                </div>
+                <header class="card-header">
+                    <p class="card-header-title">
+                        Ping Pong Score keeper
+                    </p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <h1 class="title is-1"><span class="player1Score">0</span> to <span class="player2Score">0</span></h1>
+                        <p class="subtitle">Use the buttons below to keep score</p>
+                        <label for="playto" class="label is-large is-inline">Playing To</label>
+                        <div class="select is-rounded" id="playto">
+                            <select name="" id="winningScore">
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <footer class="card-footer">
+                    <button class="button card-footer-item is-large is-primary" id="player1Button">+1 player One</button>
+                    <button class="button card-footer-item is-large is-info" id="player2Button">+1 player Two</button>
+                    <button class="button card-footer-item is-large is-danger" id="resetButton">reset</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+
+    </section>
+
+</div>
+
 
 <script>
     const winningScoreSelector = document.querySelector("#winningScore")
@@ -42,30 +70,36 @@
     let winningScore = 3;
     let isGameOver = false;
 
-    winningScoreSelector.addEventListener("change", function(){
+    winningScoreSelector.addEventListener("change", function () {
         winningScore = parseInt(this.value); //select 의 값은 string 이다.
         reset();
     })
 
-    player1Button.addEventListener("click", function(){
-        if(!isGameOver){
+    player1Button.addEventListener("click", function () {
+        if (!isGameOver) {
             player1Score++;
-            if(player1Score === winningScore){
+            if (player1Score === winningScore) {
                 isGameOver = true;
-                player1ScoreDisplay.classList.add("winner")
-                player2ScoreDisplay.classList.add("loser")
+                player1ScoreDisplay.classList.add("has-text-success")
+                player2ScoreDisplay.classList.add("has-text-danger")
+
+                player1Button.disabled = true;
+                player2Button.disabled = true;
             }
             player1ScoreDisplay.textContent = player1Score;
         }
     })
 
-    player2Button.addEventListener("click", function(){
-        if(!isGameOver) {
+    player2Button.addEventListener("click", function () {
+        if (!isGameOver) {
             player2Score++;
-            if(player2Score === winningScore) {
+            if (player2Score === winningScore) {
                 isGameOver = true;
-                player2ScoreDisplay.classList.add("winner")
-                player1ScoreDisplay.classList.add("loser")
+                player2ScoreDisplay.classList.add("has-text-success")
+                player1ScoreDisplay.classList.add("has-text-danger")
+
+                player1Button.disabled = true;
+                player2Button.disabled = true;
             }
             player2ScoreDisplay.textContent = player2Score;
         }
@@ -73,16 +107,19 @@
 
     resetButton.addEventListener("click", reset);
 
-    function reset(){
+    function reset() {
         isGameOver = false;
 
         player1Score = 0;
         player1ScoreDisplay.textContent = player1Score;
-        player1ScoreDisplay.classList.remove('winner', 'loser');
+        player1ScoreDisplay.classList.remove('has-text-success', 'has-text-danger');
 
         player2Score = 0;
         player2ScoreDisplay.textContent = player2Score;
-        player2ScoreDisplay.classList.remove('winner', 'loser')
+        player2ScoreDisplay.classList.remove('has-text-success', 'has-text-danger')
+
+        player1Button.disabled = false;
+        player2Button.disabled = false;
     }
 
 </script>
