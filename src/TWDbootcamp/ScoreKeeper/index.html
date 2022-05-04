@@ -10,63 +10,70 @@
 <div class="container ">
     <section class="section">
         <div class="columns">
-        <div class="column is-half is-offset-one-quarter">
-            <div class="card">
-                <div class="card-image">
-                    <figure class="image is-2by1">
-                        <img src="" alt="">
-                    </figure>
-                </div>
-                <header class="card-header">
-                    <p class="card-header-title">
-                        Ping Pong Score keeper
-                    </p>
-                </header>
-                <div class="card-content">
-                    <div class="content">
-                        <h1 class="title is-1"><span class="player1Score">0</span> to <span class="player2Score">0</span></h1>
-                        <p class="subtitle">Use the buttons below to keep score</p>
-                        <label for="playto" class="label is-large is-inline">Playing To</label>
-                        <div class="select is-rounded" id="playto">
-                            <select name="" id="winningScore">
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
+            <div class="column is-half is-offset-one-quarter">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image is-2by1">
+                            <img src="" alt="">
+                        </figure>
+                    </div>
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            Ping Pong Score keeper
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            <h1 class="title is-1"><span id="player1Score">0</span> to <span id="player2Score">0</span>
+                            </h1>
+                            <p class="subtitle">Use the buttons below to keep score</p>
+                            <label for="playto" class="label is-large is-inline">Playing To</label>
+                            <div class="select is-rounded" id="playto">
+                                <select name="" id="winningScore">
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+                    <footer class="card-footer">
+                        <button class="button card-footer-item is-large is-primary" id="player1Button">+1 player One
+                        </button>
+                        <button class="button card-footer-item is-large is-info" id="player2Button">+1 player Two
+                        </button>
+                        <button class="button card-footer-item is-large is-danger" id="resetButton">reset</button>
+                    </footer>
                 </div>
-                <footer class="card-footer">
-                    <button class="button card-footer-item is-large is-primary" id="player1Button">+1 player One</button>
-                    <button class="button card-footer-item is-large is-info" id="player2Button">+1 player Two</button>
-                    <button class="button card-footer-item is-large is-danger" id="resetButton">reset</button>
-                </footer>
             </div>
         </div>
-    </div>
 
 
     </section>
 
 </div>
 
-
 <script>
+
+    const p1 = {
+        score: 0,
+        button: document.querySelector("#player1Button"),
+        display: document.querySelector('#player1Score'),
+
+    }
+    const p2 = {
+        score: 0,
+        button: document.querySelector("#player2Button"),
+        display: document.querySelector('#player2Score'),
+    }
+
     const winningScoreSelector = document.querySelector("#winningScore")
-    const player1Button = document.querySelector("#player1Button");
-    const player2Button = document.querySelector("#player2Button");
-    const player1ScoreDisplay = document.querySelector('.player1Score');
-    const player2ScoreDisplay = document.querySelector('.player2Score');
-
     const resetButton = document.querySelector("#resetButton")
-
-    let player1Score = 0;
-    let player2Score = 0;
     let winningScore = 3;
     let isGameOver = false;
 
@@ -75,51 +82,41 @@
         reset();
     })
 
-    player1Button.addEventListener("click", function () {
+    function updateScores(player, opponent) {
         if (!isGameOver) {
-            player1Score++;
-            if (player1Score === winningScore) {
+            player.score++;
+            if (player.score === winningScore) {
                 isGameOver = true;
-                player1ScoreDisplay.classList.add("has-text-success")
-                player2ScoreDisplay.classList.add("has-text-danger")
+                player.display.classList.add("has-text-success")
+                opponent.display.classList.add("has-text-danger")
 
-                player1Button.disabled = true;
-                player2Button.disabled = true;
+                player.button.disabled = true;
+                opponent.button.disabled = true;
             }
-            player1ScoreDisplay.textContent = player1Score;
+            player.display.textContent = player.score;
         }
+    }
+
+    p1.button.addEventListener("click", function () {
+        updateScores(p1, p2)
     })
 
-    player2Button.addEventListener("click", function () {
-        if (!isGameOver) {
-            player2Score++;
-            if (player2Score === winningScore) {
-                isGameOver = true;
-                player2ScoreDisplay.classList.add("has-text-success")
-                player1ScoreDisplay.classList.add("has-text-danger")
-
-                player1Button.disabled = true;
-                player2Button.disabled = true;
-            }
-            player2ScoreDisplay.textContent = player2Score;
-        }
-    })
+    p2.button.addEventListener("click", function () {
+        updateScores(p2, p1)
+    });
 
     resetButton.addEventListener("click", reset);
 
     function reset() {
         isGameOver = false;
 
-        player1Score = 0;
-        player1ScoreDisplay.textContent = player1Score;
-        player1ScoreDisplay.classList.remove('has-text-success', 'has-text-danger');
+        for(let p of [p1,p2]){
+            p.score = 0;
+            p.display.textContent = 0;
+            p.display.classList.remove('has-text-success', 'has-text-danger');
+            p.button.disabled = false;
+        }
 
-        player2Score = 0;
-        player2ScoreDisplay.textContent = player2Score;
-        player2ScoreDisplay.classList.remove('has-text-success', 'has-text-danger')
-
-        player1Button.disabled = false;
-        player2Button.disabled = false;
     }
 
 </script>
