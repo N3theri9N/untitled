@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Campground = require('../models/campground');
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+mongoose.connect('mongodb://root:root@localhost:27017/yelp-camp?authSource=admin&authMechanism=SCRAM-SHA-1', {
     useNewurlParser : true,
     useUnifiedTopology : true,
 })

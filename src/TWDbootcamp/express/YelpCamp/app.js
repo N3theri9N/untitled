@@ -2,10 +2,11 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
+const ejsMate = require('ejs-mate');
 const Campground = require('./models/campground');
 const methodOverride = require('method-override');
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+mongoose.connect('mongodb://root:root@localhost:27017/yelp-camp?authSource=admin&authMechanism=SCRAM-SHA-1', {
     useNewurlParser : true,
     useUnifiedTopology : true,
 })
@@ -16,10 +17,12 @@ db.once("open" , ()=>{
     console.log("Database Connected");
 });
 
+app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
+
 
 app.get('/', (req, res) => {
     res.send('HELLO FROM YELP CAMP!')
