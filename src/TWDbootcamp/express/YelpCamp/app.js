@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const Campground = require('./models/campground');
+const Review = require('./models/review');
 const methodOverride = require('method-override');
 
 mongoose.connect('mongodb://root:root@localhost:27017/yelp-camp?authSource=admin&authMechanism=SCRAM-SHA-1', {
@@ -44,7 +45,7 @@ app.get('/campgrounds/new', async (req, res) => {
 });
 
 app.get('/campgrounds/:id', async (req, res) => {
-    const campground = await Campground.findById(req.params.id);
+    const campground = await Campground.findById(req.params.id).populate('reviews');
     res.render('campgrounds/show', {campground});
 });
 
@@ -65,6 +66,21 @@ app.get('/campgrounds/:id/edit', async (req, res) => {
     res.render('campgrounds/edit', {campground});
 });
 
+app.post('/campgrounds/:id/reviews', async(req, res) => {
+  const campground = await Campground.findById(req.params.id);
+  const review = new Review(req.body.review);
+  campground.reviews.push(review);
+  await review.save();
+  await campground.save();
+  res.redirect(`/campgrounds/${campground._id}`);
+});
+
+app.delete('/campgrounds/:campId/reviews/:reviewId', async(req, res) => {
+  const {id , reviewId} = req.params;
+  Campground.findByIdAndUpdate(id, {$pull : {reviews : reviewId }})
+  await Review.findByIdAndDelete(reviewId);
+  res.redirect(`/campgrounds/${id}`);
+})
 
 /*
 app.get('/makecampground', async (req, res) => {
