@@ -11,18 +11,17 @@ const reviews = require("./routes/reviews");
 const ExpressError = require('./utils/ExpressError');
 const session = require('express-session');
 const flash = require('connect-flash');
-/*
+
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
     useNewurlParser : true,
     useUnifiedTopology : true,
 })
-
-*/
+/*
 mongoose.connect('mongodb://root:root@localhost:27017/yelp-camp?authSource=admin&authMechanism=SCRAM-SHA-1', {
     useNewurlParser : true,
     useUnifiedTopology : true,
 })
-
+*/
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open" , ()=>{
