@@ -2,17 +2,19 @@ const mongoose = require('mongoose');
 const Campground = require('../models/campground');
 
 
-/*
+
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+    useNewurlParser : true,
+    useUnifiedTopology : true,
+})
+
+/*
+mongoose.connect('mongodb://root:root@localhost:27017/yelp-camp?authSource=admin&authMechanism=SCRAM-SHA-1', {
     useNewurlParser : true,
     useUnifiedTopology : true,
 })
 */
 
-mongoose.connect('mongodb://root:root@localhost:27017/yelp-camp?authSource=admin&authMechanism=SCRAM-SHA-1', {
-    useNewurlParser : true,
-    useUnifiedTopology : true,
-})
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open" , ()=>{
@@ -31,7 +33,16 @@ const seedDB = async() => {
         const camp = new Campground({
             location : `${cities[random1000].city}, ${cities[random1000].state}`,
             title : `${sample(descriptors)} ${sample(places)}`,
-            image : 'https://source.unsplash.com/collection/483251',
+            images : [
+                {
+                    url : "https://res.cloudinary.com/dvi0uzzbl/image/upload/v1654160550/YelpCamp/wxp8s9z9ty05o0p95cqd.jpg",
+                    filename : "YelpCamp/wxp8s9z9ty05o0p95cqd"
+                },
+                {
+                    url : "https://res.cloudinary.com/dvi0uzzbl/image/upload/v1654160550/YelpCamp/gswuz4ouueyqqxxzo8tz.jpg",
+                    filename : "YelpCamp/gswuz4ouueyqqxxzo8tz"
+                }
+            ],
             description : 'Description',
             price : Math.floor(Math.random() * 20) + 10
         });
